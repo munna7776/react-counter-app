@@ -1,10 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-const Counter = () => {
+const Counter = ({startFrom}) => {
   return (
-    <div>
-      
-    </div>
+    <div className="counter">{startFrom}</div>
   )
 }
 
