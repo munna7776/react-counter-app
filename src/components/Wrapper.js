@@ -34,6 +34,7 @@ const Wrapper = () => {
     const handleStartCounter = () => {
         const value = Number(inputCountRef.current.value);
         setStartFrom(value);
+        inputCountRef.current.value = '';
         setStartCounter(true);
         setShowCounter(true);
     }
