@@ -21,6 +21,7 @@ export default class Wrapper extends Component {
         showCounter : true,
         startTimer : true,
         value : Number(this.state.count),
+        count : ''
       }
     })
   };
