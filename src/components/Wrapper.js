@@ -9,37 +9,36 @@ export default class Wrapper extends Component {
       value: 0,
       count : '',
       showCounter: true,
+      startTimer : false
     };
   }
 
-  resetCounter = () => {
-    this.setState({
-      value : Number(this.state.count),
-      showCounter : true
-    })
-    clearInterval(this.interval)
-  }
 
   startCounter = () => {
-    this.resetCounter()
-    this.interval = setInterval(() => {
-      this.setState((prevState) => {
-        return {
-          value:  prevState.value + 1,
-        };
-      });
-    }, 1000);
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        showCounter : true,
+        startTimer : true,
+        value : Number(this.state.count),
+      }
+    })
   };
 
   stopCounter = () => {
-    clearInterval(this.interval)
+    this.setState({startTimer : false})
   };
 
   handleRemoveCounter = () => {
-    this.setState({
-      count : '',
-      showCounter : false,
-      value : 0
+    clearInterval(this.interval);
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        value: 0,
+        count : '',
+        showCounter: false,
+        startTimer : false
+      }
     })
   }
 
@@ -54,12 +53,26 @@ export default class Wrapper extends Component {
 
 
   componentDidMount() {
-    this.startCounter();
+    this.setState({startTimer : true})
   }
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    if(this.interval) {
+      clearInterval(this.interval)
+    }
+
+    if(this.state.startTimer) {
+      this.interval = setInterval(() => {
+        this.setState((prevState) => {
+          return {
+            value:  prevState.value + 1,
+          };
+        });
+      }, 1000);
+    }
+  }
   
   componentWillUnmount() {
-    this.stopCounter();
+    clearInterval(this.interval)
   }
 
   render() {
