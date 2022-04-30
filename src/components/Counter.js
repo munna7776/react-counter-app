@@ -1,8 +1,8 @@
-import React from 'react';
+import styles from '../styles/Wrapper.module.css';
 
 const Counter = ({startFrom}) => {
   return (
-    <div className="counter">{startFrom}</div>
+    <div className={styles["counter"]}>{startFrom}</div>
   )
 }
 

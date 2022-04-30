@@ -1,57 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Counter from './Counter';
+import styles from '../styles/Wrapper.module.css';
 
 const Wrapper = () => {
-    const [count , setCount] = useState('');
-    const [startFrom , setStarFrom] = useState(0);
+    const inputCountRef = useRef('');
+    const [startFrom , setStartFrom] = useState(0);
     const [timer , setTimer] = useState(null);
     const [showCounter , setShowCounter] = useState(true);
+    const [startCounter , setStartCounter] = useState(false);
 
     useEffect(()=>{
-        handleStartCounter();
-
-        return () => clearInterval(timer)
-    },[handleStartCounter])
-
-    const handleChange = (e) => {
-        setCount(e.target.value)
-    }
-
-    const handleResetCounter = () => {
-        setStarFrom(Number(count));
-        setShowCounter(true)
+        // if timer (setInterval is running) exists , using clearInterval , it will clear timer state
         if(timer) {
             clearInterval(timer)
         }
-    }
 
+        // if startCounter is true i.e, clicked on start button ,  then only counter interval will start.
+        if(startCounter) {
+            setTimer(setInterval(() => {
+                setStartFrom(prevStart => prevStart + 1)
+            }, 1000))
+        }
+
+        // if component gets unmounted then after timer interval will be cleared,
+        return () => clearInterval(timer)
+    },[startCounter])
+
+    // start counter click handler function
     const handleStartCounter = () => {
-        handleResetCounter();
-        setTimer(setInterval(() => {
-            setStarFrom(prevStart => prevStart + 1)
-        }, 1000));
+        const value = Number(inputCountRef.current.value);
+        setStartFrom(value);
+        setStartCounter(true);
+        setShowCounter(true);
     }
 
+    // stop counter click handler function
     const handleStopCounter = () => {
-        clearInterval(timer)
+        setStartCounter(false)
     }
 
+    // remove Counter component from DOM handler function
     const handleRemoveCounter = () => {
-        setCount('');
-        setStarFrom(0);
-        clearInterval(timer);
-        setShowCounter(false)
+        inputCountRef.current.value = '';
+        setShowCounter(false);
+        setStartFrom(0);
+        setStartCounter(false);
     }
+
 
     return (
-        <div className="container">
-            <div className="card">
+        <div className={styles["container"]}>
+            <div className={styles["card"]}>
+                <h1 className={styles["heading"]}>Counter</h1>
                 {showCounter && <Counter startFrom={startFrom} />}
-                <input type="number" placeholder="Enter..." value={count} onChange={handleChange} />
-                <div className="btn-group">
-                    <button className="btn" onClick={handleStartCounter}>Start</button>
-                    <button className="btn" onClick={handleStopCounter}>Stop</button>
-                    <button className="btn" onClick={handleRemoveCounter}>Delete</button>
+                <input type="number" placeholder="Enter..." ref={inputCountRef} />
+                <div className={styles["btn-group"]}>
+                    <button className={styles["btn"]} onClick={handleStartCounter}>Start</button>
+                    <button className={`${styles["btn"]} ${styles["btn-2"]}`} onClick={handleStopCounter}>Stop</button>
+                    <button className={styles["btn"]} onClick={handleRemoveCounter}>Delete</button>
                 </div>
             </div>
       </div>
