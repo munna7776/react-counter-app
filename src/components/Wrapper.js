@@ -55,7 +55,6 @@ export default class Wrapper extends Component {
 
 
   componentDidMount() {
-    // this.setState({startTimer : true})
     this.timeOut = setTimeout(() => {
       this.setState({showWelcome : false})
     }, 3000);
@@ -78,6 +77,7 @@ export default class Wrapper extends Component {
   
   componentWillUnmount() {
     clearInterval(this.interval)
+    clearTimeout(this.timeOut)
   }
 
   render() {
