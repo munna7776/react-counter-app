@@ -55,6 +55,10 @@
   .btn-2:hover {
     background: linear-gradient(150deg, rgba(251,75,2,1) 0%, rgba(255,151,0,1) 100%);
   }
+
+  .btn-2:disabled {
+    cursor: not-allowed;
+  }
   
   .btn:last-child:hover {
     background: linear-gradient(150deg, #94160d 0% , #eb2719 100%);

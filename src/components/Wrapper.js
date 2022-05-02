@@ -8,6 +8,15 @@ const Wrapper = () => {
     const [timer , setTimer] = useState(null);
     const [showCounter , setShowCounter] = useState(true);
     const [startCounter , setStartCounter] = useState(false);
+    const [showWelcome , setShowWelcome] = useState(true);
+
+    useEffect(()=>{
+        const timeout = setTimeout(() => {
+            setShowWelcome(false)
+        }, 3000);
+
+        return () => clearTimeout(timeout)
+    },[])
 
 
     useEffect(()=>{
@@ -53,12 +62,13 @@ const Wrapper = () => {
     return (
         <div className={styles["container"]}>
             <div className={styles["card"]}>
+                {showWelcome && <h1 className={styles["heading"]}>Welcome To</h1>}
                 <h1 className={styles["heading"]}>Counter</h1>
                 {showCounter && <Counter startFrom={startFrom} />}
                 <input type="number" placeholder="Enter..." ref={inputCountRef} />
                 <div className={styles["btn-group"]}>
                     <button className={styles["btn"]} onClick={handleStartCounter}>Start</button>
-                    <button className={`${styles["btn"]} ${styles["btn-2"]}`} onClick={handleStopCounter}>Stop</button>
+                    <button disabled={!startCounter} className={`${styles["btn"]} ${styles["btn-2"]}`} onClick={handleStopCounter}>Stop</button>
                     <button className={styles["btn"]} onClick={handleRemoveCounter}>Delete</button>
                 </div>
             </div>
