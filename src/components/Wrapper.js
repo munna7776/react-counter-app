@@ -9,7 +9,8 @@ export default class Wrapper extends Component {
       value: 0,
       count : '',
       showCounter: true,
-      startTimer : false
+      startTimer : false,
+      showWelcome : true
     };
   }
 
@@ -54,7 +55,10 @@ export default class Wrapper extends Component {
 
 
   componentDidMount() {
-    this.setState({startTimer : true})
+    // this.setState({startTimer : true})
+    this.timeOut = setTimeout(() => {
+      this.setState({showWelcome : false})
+    }, 3000);
   }
   componentDidUpdate() {
     if(this.interval) {
@@ -80,6 +84,7 @@ export default class Wrapper extends Component {
     return (
       <div className={styles["container"]}>
         <div className={styles["card"]}>
+          {this.state.showWelcome && <h1 className={styles["heading"]}>Welcome To</h1>}
           <h1 className={styles["heading"]}>Counter</h1>
           {this.state.showCounter && <Counter startFrom={this.state.value} />}
           <input type="number" placeholder="Enter..." value={this.state.count} onChange={this.handleChange} />
