@@ -9,9 +9,6 @@ const Wrapper = () => {
     const [showCounter , setShowCounter] = useState(true);
     const [startCounter , setStartCounter] = useState(false);
 
-    useEffect(()=>{
-        setStartCounter(true)
-    },[])
 
     useEffect(()=>{
         // if timer (setInterval is running) exists , using clearInterval , it will clear timer state
