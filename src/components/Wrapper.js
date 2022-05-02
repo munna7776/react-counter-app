@@ -90,7 +90,7 @@ export default class Wrapper extends Component {
           <input type="number" placeholder="Enter..." value={this.state.count} onChange={this.handleChange} />
           <div className={styles["btn-group"]}>
             <button className={styles["btn"]} onClick={this.startCounter}>Start</button>
-            <button className={`${styles['btn']} ${styles['btn-2']}`} onClick={this.stopCounter}>Stop</button>
+            <button disabled={!this.state.startTimer} className={`${styles['btn']} ${styles['btn-2']}`} onClick={this.stopCounter}>Stop</button>
             <button className={styles["btn"]} onClick={this.handleRemoveCounter}>Delete</button>
           </div>
         </div>
