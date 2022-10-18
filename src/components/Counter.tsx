@@ -1,6 +1,10 @@
 import styles from '../styles/Wrapper.module.css';
 
-const Counter = ({startFrom}) => {
+type CounterProps = {
+  startFrom: number
+}
+
+const Counter: React.FC<CounterProps> = ({startFrom}) => {
   return (
     <div className={styles["counter"]}>{startFrom}</div>
   )

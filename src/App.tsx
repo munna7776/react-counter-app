@@ -1,7 +1,7 @@
 import React from 'react'
 import Wrapper from './components/Wrapper';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <Wrapper />
   )
